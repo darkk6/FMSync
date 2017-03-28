@@ -114,7 +114,7 @@
 		if(count($where)>0){
 			$param = array_merge( array($tables['table'],$tables['fields']) , $where );
 			$res = call_user_func_array(array($db,'select'),$param);
-			if( $db->isError($res) ){
+			if( $db->isError($res) || ( is_array($res) && count($res)==0 ) ){
 				$db->log("Fetch Record","Fetching record error : ".$res);
 				continue;
 			}

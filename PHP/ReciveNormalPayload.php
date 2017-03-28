@@ -142,7 +142,7 @@
 			}
 			//尋找是否有這筆資料 (取 uuid 和 delete mark)
 			$res=$db->select($layout,"SYNC_UTC , SYNC_DELETE","WHERE SYNC_UUID='".$record['SYNC_UUID']."'");
-			if( $db->isError($res) ){
+			if( $db->isError($res) || ( is_array($res) && count($res)==0 ) ){
 				$res=$db->insert($layout,$record);
 			}else{
 				//取出第一筆資料的 fm_recid 並比較 SYNC_UTC , 僅使用較大者

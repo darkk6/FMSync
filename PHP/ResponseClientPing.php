@@ -70,6 +70,7 @@
 		if($tmp['ErrCode']!=401) die("ServerError-".$res);
 	}else{
 		$recid = $res[0]['fm_recid']; //有找到此 Client Session , 用 update
+		if( !is_numeric($recid) ) $recid = -1;
 	}
 	
 	if( $recid==-1 ){

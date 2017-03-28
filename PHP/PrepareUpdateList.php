@@ -138,7 +138,7 @@
 		
 		//也要找出所有 SYNC_DELETE 為 1 的，並將時間設為目前 Client 的時間，藉此達到告知 Client 必須要更新這筆資料
 		$res = $db->select($layout,"SYNC_UUID , SYNC_UTC , SYNC_DELETE","WHERE",$queryCondition,"WHERE",$queryConditionDel);
-		if( $db->isError($res) ){
+		if( $db->isError($res) || ( is_array($res) && count($res)==0 ) ){
 			$db->log("Fetch Record","Fetching record error : ".$res);
 			continue;
 		}
