@@ -10,6 +10,10 @@
 - Suppress PHP warning messages
   
   
+  
+## Detailed document please see my [Blogger](http://darkk6.blogspot.tw/2017/03/fmsync-filemaker-not-plugin.html#more)
+  
+  
 # Setting up  
 Open your FM solution and FMSync_darkk6.fmp12  
   

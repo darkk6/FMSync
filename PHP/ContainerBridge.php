@@ -11,11 +11,12 @@
  * 負責處理 Client 下載 Container 資料的部分 ( 透過 Insert From URL )
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.0.0
+ * @Version 1.1.0
  *
  * @License GPLv3
  *
  ********************************/
+	error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 	set_time_limit(0);
 	
 	/* FileMaker 支援的 MINE type */

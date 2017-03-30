@@ -10,6 +10,10 @@
 - PHP 抑制錯誤訊息
   
   
+  
+## 更詳細的說明請參考我的 [Blogger](http://darkk6.blogspot.tw/2017/03/fmsync-filemaker-not-plugin.html#more)
+  
+  
 # 設定步驟  
 開啟要設定的 FileMaker 檔案以及 FMSync_darkk6.fmp12 以便設定  
   

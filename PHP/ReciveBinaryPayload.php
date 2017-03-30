@@ -11,7 +11,7 @@
  * 負責處理由 Client 傳來需要更新的 Container 資料(Base64 String)
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.0.0
+ * @Version 1.1.0
  *
  * @License GPLv3
  *
@@ -23,11 +23,13 @@
 			1. Client ID (透過 FileMaker Get (PersistentID) 取得的 )
 			2. tableName
 			3. fieldName
-			4. fileName
-			5. Sync_UUID
-			6. Sync_UTC
-			7. base64 String
+			4. repetition
+			5. fileName
+			6. Sync_UUID
+			7. Sync_UTC
+			8. base64 String
 	*/
+	error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 	set_time_limit(0);
 	$_request_body = file_get_contents('php://input');
 	$_request_body = urldecode($_request_body);

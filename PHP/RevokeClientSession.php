@@ -11,11 +11,12 @@
  * 註銷 Client 的 working session
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.0.0
+ * @Version 1.1.0
  *
  * @License GPLv3
  *
  ********************************/
+	error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 	set_time_limit(0);
 	$_request_body = file_get_contents('php://input');
 	$ClientID = urldecode($_request_body);

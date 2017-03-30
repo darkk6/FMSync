@@ -11,7 +11,7 @@
  * 負責處理 Client 詢問 Server 有哪些資料需要更新(給Client)的 UUID List
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.0.0
+ * @Version 1.1.0
  *
  * @License GPLv3
  *
@@ -61,11 +61,10 @@
 			TableName</col>UUID</col>UTC</col>
 		
 	*/
+	error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 	set_time_limit(0);
 	$_request_body = file_get_contents('php://input');
 	$_request_body = urldecode($_request_body);
-	
-	// $_request_body = "DARKK6<fmsbr/>1<fmsbr/></table>SYNC_Data_Table<fmsbr/></key>idx<fmsbr/></val>>=2<fmsbr/>";
 	
 	$searchData=explode("<fmsbr/>",$_request_body);
 	

@@ -11,13 +11,14 @@
  * 負責處理由 Client 傳來需要更新資料的 Payload
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.0.0
+ * @Version 1.1.0
  *
  * @License GPLv3
  *
  ********************************/
  
 	// ini_set('auto_detect_line_endings',true);//這樣才能讓 php 讀取到 Mac 的 \r 換行 , 但應該不是很需要
+	error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 	set_time_limit(0);
 	
 	$_request_body = file_get_contents('php://input');
