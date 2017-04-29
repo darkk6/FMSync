@@ -15,4 +15,7 @@
 /* 指定 FMSync_Server 上對應的腳本名稱 , Script name on FMSync_Server */
 	$FMSync_ContainerBriderScript = "ContainerReceiver";	// 處理 Client 傳送 Binary 給 Server 的腳本 , Client push container data to server handler.
 	$FMSync_RegisterSessionScript = "RegisterSession";		// 登記此 Client 正在同步的腳本 , Script name for register client is syncing
+	
+/* 啟用或禁止 CheckSetup.php 頁面顯示內容 , Set CheckSetup.php page can be access or not */
+	define("CHECK_SETUP_ACCESS",false);
 ?>

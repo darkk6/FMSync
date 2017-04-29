@@ -17,8 +17,13 @@
  *
  ********************************/
 
+	require_once("config/Config.php");
+	if(!CHECK_SETUP_ACCESS){
+		header("location: noaccess.html");
+		exit(0);
+	}
+ 
 	if( $_POST['m']==1 ){
-		require_once("config/Config.php");
 		require_once("EzFMDB/EzFMDB.php");
 		$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD);
 		$res = $db->getLayouts();
@@ -62,6 +67,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>FMSync Server Checker</title>
 		<style type="text/css">
+			body{
+				font-family: 'Arial','微軟正黑體';
+				cursor: default;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
 			table , tr , td{
 				border-collapse: collapse;
 			}
@@ -77,7 +92,6 @@
 			td:first-child{
 				border-right:1px solid gray;
 			}
-			
 			.icon{
 				width:24px;
 				height:24px;
@@ -187,6 +201,44 @@
 				?>
 				</tr>
 			<!----------->
+			<tr class="divider"><td colspan=3 style="height:20px;"></td></tr>
+			<!----------->
+				<tr>
+					<td> FM Server </td>
+				<?php
+					if($canDoTest){
+						$text = $FMSync_HOST;
+					}else{
+						$text = '---';
+					}
+					echo "<td colspan=2>$text</td>";
+				?>
+				</tr>
+			<!----------->
+				<tr>
+					<td> FM Database </td>
+				<?php
+					if($canDoTest){
+						$text = $FMSync_DB;
+					}else{
+						$text = '---';
+					}
+					echo "<td colspan=2>$text</td>";
+				?>
+				</tr>
+			<!----------->
+				<tr>
+					<td> FM User </td>
+				<?php
+					if($canDoTest){
+						$text = $FMSync_USER;
+					}else{
+						$text = '---';
+					}
+					echo "<td colspan=2>$text</td>";
+				?>
+				</tr>
+			<!----------->
 				<tr>
 					<td> Connection Test </td>
 				<?php
@@ -202,6 +254,9 @@
 			<div style="padding-top:20px;font-size:0.8em;">
 				Icons are made by <a target="_blank" href="http://www.flaticon.com/authors/maxim-basinski">Maxim Basinski</a>
 				from <a target="_blank" href="http://www.flaticon.com">flaticon</a> CC-BY
+			</div>
+			<div style="padding-top:20px;font-size:0.8em;">
+				FMSync by darkk6 (LuChun Pan) , Fork me on <a target="_blank" href="https://github.com/darkk6/FMSync">Github</a>
 			</div>
 		</center>
 <?php if($canDoTest){ ?>
