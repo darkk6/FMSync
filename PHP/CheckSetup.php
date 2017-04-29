@@ -17,6 +17,17 @@
  *
  ********************************/
 
+	if( $_POST['m']==1 ){
+		require_once("config/Config.php");
+		require_once("EzFMDB/EzFMDB.php");
+		$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD."QQ");
+		$res = $db->getLayouts();
+		if( $db->isError($res) ) echo $db->getErrInfo($res);
+		else echo "測試連線成功";
+		exit(0);
+	}
+
+
 	require_once("config/internal_config.php");
 	
 	$ic_check = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyNi42NjcgNDI2LjY2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDI2LjY2NyA0MjYuNjY3OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0iZmlsbDojNkFDMjU5OyIgZD0iTTIxMy4zMzMsMEM5NS41MTgsMCwwLDk1LjUxNCwwLDIxMy4zMzNzOTUuNTE4LDIxMy4zMzMsMjEzLjMzMywyMTMuMzMzIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyIGwxNDAuODk0LTE0MC44OThsMzEuMzA5LDMxLjMwOUwxNzQuMTk5LDMyMi45MTh6Ii8+DQo8L3N2Zz4g';
@@ -42,6 +53,8 @@
 	
 	$imgOK = '<img class="icon" src="'.$ic_check.'" />';
 	$imgNO = '<img class="icon" src="'.$ic_cross.'" />';
+	
+	$canDoTest = $phpVer >= PHP_REQUIRE_VERSION && $hasCURL && $hasMBString && $hasEzFMDB && $hasFMAPI;
 ?>
 <html>
 	<head>
@@ -148,6 +161,7 @@
 						require_once("EzFMDB/EzFMDB.php");
 						$text = EzFMDB::VERSION;
 						if( $text < EzFMDB_VERSION ){
+							$canDoTest = false;
 							$text = '<span class="no">'.$text.'</span>&nbsp;&nbsp;<font style="color:gray;font-size:0.8em">Need '.EzFMDB_VERSION.'</font>';
 						}
 					}
@@ -172,11 +186,39 @@
 					echo "<td colspan=2>$postMaxSize</td>";
 				?>
 				</tr>
+			<!----------->
+				<tr>
+					<td> Connection Test </td>
+				<?php
+					if($canDoTest){
+						$btn = '<button onClick="conTest();"> Try it. </button>';
+					}else{
+						$btn = '<button disabled> Fix up first </button>';
+					}
+					echo "<td id='btn' colspan=2>$btn</td>";
+				?>
+				</tr>
 			</table>
 			<div style="padding-top:20px;font-size:0.8em;">
 				Icons are made by <a target="_blank" href="http://www.flaticon.com/authors/maxim-basinski">Maxim Basinski</a>
 				from <a target="_blank" href="http://www.flaticon.com">flaticon</a> CC-BY
 			</div>
 		</center>
+<?php if($canDoTest){ ?>
+			<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+			<script type="text/javascript">
+				function conTest(){
+					if(!window.jQuery){
+						alert("無法載入必要元件，請確認網路狀態是否正常");
+						return;
+					}
+					$("#btn").html('測試中請稍候...');
+					$.post("CheckSetup.php",{m:1},function(res){
+						alert(res);
+						$("#btn").html('<button onClick="conTest();"> Try it. </button>');
+					});
+				}
+			</script>
+<?php } ?>
 	</body>
 </html>
