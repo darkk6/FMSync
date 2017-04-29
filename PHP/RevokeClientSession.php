@@ -11,7 +11,7 @@
  * 註銷 Client 的 working session
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *
@@ -24,6 +24,7 @@
 	require_once("config/Config.php");
 	require_once("EzFMDB/EzFMDB.php");
 	$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD);
+	$db->setSkipEscapeCRLF(true,true);
 	
 	$res = $db->update("FMSync_ClientSession","working=0,syncing=0","WHERE ClientID='$ClientID'");
 	

@@ -11,7 +11,7 @@
  * 負責處理 Client 要求 Server 要更新的資料內容
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *
@@ -108,6 +108,7 @@
 		$db->setDebug($log);
 	*/
 	$db->setCastResult(false);//因為 FileMaker 的 Number 超過了 php 的 int 上限
+	$db->setSkipEscapeCRLF(true,true);
 	
 	
 	$result = array();
@@ -209,7 +210,7 @@
 								$binMD5 = "<fmsmd5/><fmsnomd5/>";
 							}
 							//不是 container 時 $binMD5 是空字串
-							$value[] = $record[$field][$i].$binMD5;
+							$value[] = fixCRLF($record[$field][$i]).$binMD5;
 						}
 					}else{
 						if( $needCheckMD5 ){
@@ -219,7 +220,7 @@
 							$binMD5 = "<fmsmd5/><fmsnomd5/>";
 						}
 						//不是 container 時 $binMD5 是空字串
-						$value[] = $record[$field].$binMD5;
+						$value[] = fixCRLF($record[$field]).$binMD5;
 					}
 				}
 				$tableData['values'][] = $value;
@@ -248,5 +249,8 @@
 	
 	function removeEmptyFunc($var){
 		return strlen($var)>0;
+	}
+	function fixCRLF($str){
+		return preg_replace("/[\r\n]/","<fmcrlf/>",$str);
 	}
 ?>

@@ -11,7 +11,7 @@
  * 負責處理 Client 詢問 Server 有哪些資料需要更新(給Client)的 UUID List
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *
@@ -121,6 +121,7 @@
 	*/
 	
 	$db->setCastResult(false);//因為 FileMaker 的 Number 超過了 php 的 int 上限
+	$db->setSkipEscapeCRLF(true,true);
 	
 	$queryResult=array();
 	foreach($request as $layout => $data){

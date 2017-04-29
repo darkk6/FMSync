@@ -11,7 +11,7 @@
  * 負責處理由 Client 傳來需要更新資料的 Payload
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *
@@ -120,6 +120,7 @@
 	*/
 	
 	$db->setCastResult(false);//因為 FileMaker 的 Number 超過了 php 的 int 上限 , 判斷上會有問題
+	$db->setSkipEscapeCRLF(true,true);
 	
 	// Field Data 是直接透過 PHP API 寫入，因此要先執行登記 ClientID 的 UTC Override , 讓 UTC 改為 client 傳來的時間
 	$res = $db->runScript("FMSync_ClientSession",$FMSync_RegisterSessionScript,$ClientID,"1");

@@ -11,7 +11,7 @@
  * 負責處理由 Client 傳來需要更新的 Container 資料(Base64 String)
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *
@@ -53,6 +53,7 @@
 	require_once("config/Config.php");
 	require_once("EzFMDB/EzFMDB.php");
 	$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD);
+	$db->setSkipEscapeCRLF(true,true);
 	
 	/* 如有需要自行啟用 , Uncomment this is you need log file
 		require_once("EzFMDB/util/FileLogger.php");

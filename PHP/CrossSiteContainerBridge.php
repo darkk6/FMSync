@@ -11,7 +11,7 @@
  * 提供 Request 轉送的功能，因為 FileMaker 的 getContainerData 必須在 local 端，若要跨站可以使用這個中介
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *

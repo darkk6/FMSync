@@ -11,7 +11,7 @@
  * 負責處理 Client 詢問 Server Container MD5 的部分
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.1.0
+ * @Version 1.2.0
  *
  * @License GPLv3
  *
@@ -68,6 +68,7 @@
 	require_once("config/Config.php");
 	require_once("EzFMDB/EzFMDB.php");
 	$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD);
+	$db->setSkipEscapeCRLF(true,true);
 	
 	$result=array();
 	foreach($uuidList as $table => $uuids){
