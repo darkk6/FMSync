@@ -16,6 +16,8 @@
  * @License GPLv3
  *
  ********************************/
+	require_once("config/internal_config.php");
+	
 	error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 	set_time_limit(0);
 	$_request_body = file_get_contents('php://input');
@@ -24,6 +26,10 @@
 	$ClientID = $params[0];
 	$type = intval($params[1]);
 	$type = ($type==1 ? 1 : 0);
+	
+	//加入版本判斷，必須要版本完全相符才可以使用
+	$FMSyncVer = $params[2];
+	if( $FMSyncVer != FMSYNC_VERSION ) die('<fmsync_version/>'.FMSYNC_VERSION);
 	
 	$startTime = microtime(true);
 	

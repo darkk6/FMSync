@@ -16,11 +16,8 @@
  * @License GPLv3
  *
  ********************************/
-	$FMSYNC_Version = "1.2.0";
-	
-	$PHP_MIN_VERSION = 50600;
-	$FMDB_MIN_VERSION = "1.2.0";
-	
+
+	require_once("config/internal_config.php");
 	
 	$ic_check = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyNi42NjcgNDI2LjY2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDI2LjY2NyA0MjYuNjY3OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0iZmlsbDojNkFDMjU5OyIgZD0iTTIxMy4zMzMsMEM5NS41MTgsMCwwLDk1LjUxNCwwLDIxMy4zMzNzOTUuNTE4LDIxMy4zMzMsMjEzLjMzMywyMTMuMzMzIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyIGwxNDAuODk0LTE0MC44OThsMzEuMzA5LDMxLjMwOUwxNzQuMTk5LDMyMi45MTh6Ii8+DQo8L3N2Zz4g';
 	$ic_cross = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyNi42NjcgNDI2LjY2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDI2LjY2NyA0MjYuNjY3OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0iZmlsbDojRjA1MjI4OyIgZD0iTTIxMy4zMzMsMEM5NS41MTQsMCwwLDk1LjUxNCwwLDIxMy4zMzNzOTUuNTE0LDIxMy4zMzMsMjEzLjMzMywyMTMuMzMzIHMyMTMuMzMzLTk1LjUxNCwyMTMuMzMzLTIxMy4zMzNTMzMxLjE1MywwLDIxMy4zMzMsMHogTTMzMC45OTUsMjc2LjY4OWwtNTQuMzAyLDU0LjMwNmwtNjMuMzYtNjMuMzU2bC02My4zNiw2My4zNmwtNTQuMzAyLTU0LjMxIGw2My4zNTYtNjMuMzU2bC02My4zNTYtNjMuMzZsNTQuMzAyLTU0LjMwMmw2My4zNiw2My4zNTZsNjMuMzYtNjMuMzU2bDU0LjMwMiw1NC4zMDJsLTYzLjM1Niw2My4zNkwzMzAuOTk1LDI3Ni42ODl6Ii8+DQo8L3N2Zz4=';
@@ -87,15 +84,15 @@
 			<table>
 				<tr>
 					<td style="font-weight:bold;">FMSync Version</td>
-					<td style="font-weight:bold;" colspan=2><?php echo $FMSYNC_Version; ?></td>
+					<td style="font-weight:bold;" colspan=2><?php echo FMSYNC_VERSION; ?></td>
 				</tr>
 			<!----------->
 				<tr>
 					<td> PHP Version </td>
 				<?php
-					$title = ( $phpVer<$PHP_MIN_VERSION ? "需要 php 5.6+ (Need php 5.6+)" : "" );
-					$img = ($phpVer<$PHP_MIN_VERSION ? $imgNO : $imgOK );
-					$class = ($phpVer<$PHP_MIN_VERSION ? "no" : "ok" );
+					$title = ( $phpVer < PHP_REQUIRE_VERSION ? "需要 php 5.6+ (Need php 5.6+)" : "" );
+					$img   = ( $phpVer < PHP_REQUIRE_VERSION ? $imgNO : $imgOK );
+					$class = ( $phpVer < PHP_REQUIRE_VERSION ? "no" : "ok" );
 					echo "<td title='$title'>$img</td>";
 					echo "<td class='".$class."'>".phpversion()."</td>";
 				?>
@@ -150,8 +147,8 @@
 					if($hasEzFMDB && $hasFMAPI){
 						require_once("EzFMDB/EzFMDB.php");
 						$text = EzFMDB::VERSION;
-						if( $text < $FMDB_MIN_VERSION){
-							$text = '<span class="no">'.$text.'</span>&nbsp;&nbsp;<font style="color:gray;font-size:0.8em">Need '.$FMDB_MIN_VERSION.'+</font>';
+						if( $text < EzFMDB_VERSION ){
+							$text = '<span class="no">'.$text.'</span>&nbsp;&nbsp;<font style="color:gray;font-size:0.8em">Need '.EzFMDB_VERSION.'</font>';
 						}
 					}
 					echo "<td colspan=2>$text</td>";
