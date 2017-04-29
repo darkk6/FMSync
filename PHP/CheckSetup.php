@@ -20,7 +20,7 @@
 	if( $_POST['m']==1 ){
 		require_once("config/Config.php");
 		require_once("EzFMDB/EzFMDB.php");
-		$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD."QQ");
+		$db = new EzFMDB($FMSync_HOST,$FMSync_DB,$FMSync_USER,$FMSync_PSWD);
 		$res = $db->getLayouts();
 		if( $db->isError($res) ) echo $db->getErrInfo($res);
 		else echo "測試連線成功";
