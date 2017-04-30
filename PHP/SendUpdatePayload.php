@@ -108,6 +108,8 @@
 		$db->setDebug($log);
 	*/
 	$db->setCastResult(false);//因為 FileMaker 的 Number 超過了 php 的 int 上限
+	$db->setForceCastDateTime(true);//但要強制轉換時間日期格式
+	$db->setConvertTimesFormat(true);//格式轉為 YYYY/MM/DD HH:ii:ss
 	$db->setSkipEscapeCRLF(true,true);
 	
 	
