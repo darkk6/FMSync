@@ -11,7 +11,7 @@
  * 負責處理由 Client 傳來需要更新資料的 Payload
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *

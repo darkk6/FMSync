@@ -11,7 +11,7 @@
  * 檢查 PHP 以及 Lib 訊息
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *

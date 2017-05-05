@@ -1,0 +1,7 @@
+
+- v1.2.1 : [2017.05.05]
+
+	+ Required EzFMDB version to 1.2.1
+	+ FMSync Client version to 1.2.1
+	! Ping Script will return "WAIT" when max connection is reached.
+	! Log "No recoreds found" instead of "ErrCode:401" when no recored are found

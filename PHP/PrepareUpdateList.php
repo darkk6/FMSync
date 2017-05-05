@@ -11,7 +11,7 @@
  * 負責處理 Client 詢問 Server 有哪些資料需要更新(給Client)的 UUID List
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *
@@ -138,8 +138,11 @@
 		
 		//也要找出所有 SYNC_DELETE 為 1 的，並將時間設為目前 Client 的時間，藉此達到告知 Client 必須要更新這筆資料
 		$res = $db->select($layout,"SYNC_UUID , SYNC_UTC , SYNC_DELETE","WHERE",$queryCondition,"WHERE",$queryConditionDel);
-		if( $db->isError($res) || ( is_array($res) && count($res)==0 ) ){
+		if( $db->isError($res) ){
 			$db->log("Fetch Record","Fetching record error : ".$res);
+			continue;
+		}elseif(is_array($res) && count($res)==0){
+			$db->log("Fetch Record","No records are found.");
 			continue;
 		}
 		foreach($res as $rec){

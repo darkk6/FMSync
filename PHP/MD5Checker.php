@@ -11,7 +11,7 @@
  * 負責處理 Client 詢問 Server Container MD5 的部分
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *

@@ -11,7 +11,7 @@
  * 負責處理 Client 要求 Server 要更新的資料內容
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *
@@ -162,8 +162,11 @@
 			//上面有判斷並處理實際要 Select 的欄位(若沒有新增則和 $tables['fields'] 相同)
 			$param = array_merge( array($tables['table'],$realSelectFields) , $where );
 			$res = call_user_func_array(array($db,'select'),$param);
-			if( $db->isError($res) || ( is_array($res) && count($res)==0 ) ){
+			if( $db->isError($res) ){
 				$db->log("Fetch Record","Fetching record error : ".$res);
+				continue;
+			}elseif(is_array($res) && count($res)==0 ){
+				$db->log("Fetch Record","No records are found.");
 				continue;
 			}
 			//配置結果陣列

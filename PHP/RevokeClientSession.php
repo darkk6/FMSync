@@ -11,7 +11,7 @@
  * 註銷 Client 的 working session
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *

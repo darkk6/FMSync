@@ -1,15 +1,15 @@
 <?php
 	/* 
-		**** ½Ð¤Å­×§ï¦¹¥÷ÀÉ®×   Do NOT modify this file  ****
+		**** è«‹å‹¿ä¿®æ”¹æ­¤ä»½æª”æ¡ˆ   Do NOT modify this file  ****
 		
-		¦¹ÀÉ®×¬°¤º³¡§PÂ_¨Ï¥Î¡A½Ð¤Å¥ô·N§ó°Ê
+		æ­¤æª”æ¡ˆç‚ºå…§éƒ¨åˆ¤æ–·ä½¿ç”¨ï¼Œè«‹å‹¿ä»»æ„æ›´å‹•
 		
 		This file is for internal usage, DO NOT change anything in this file.
 		
 	*/
 	
-	define("FMSYNC_VERSION","1.2.0");		// FMSync Server ª©¥»¡A»Ý§¹¥þ¬Û²Å
-	define("EzFMDB_VERSION","1.2.0");		// »Ý­nªº EzFMDB ª©¥»¡A»Ý§¹¥þ¬Û²Å
+	define("FMSYNC_VERSION","1.2.1");		// FMSync Server ç‰ˆæœ¬ï¼Œéœ€å®Œå…¨ç›¸ç¬¦
+	define("EzFMDB_VERSION","1.2.1");		// éœ€è¦çš„ EzFMDB ç‰ˆæœ¬ï¼Œéœ€å®Œå…¨ç›¸ç¬¦
 	
-	define("PHP_REQUIRE_VERSION",50600);	// ³Ì¤pªº PHP ¨Ï¥Îª©¥»
+	define("PHP_REQUIRE_VERSION",50600);	// æœ€å°çš„ PHP ä½¿ç”¨ç‰ˆæœ¬
 ?>

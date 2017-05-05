@@ -11,7 +11,7 @@
  * 負責處理回應 Client 的 Ping , 分為兩個功能，若 0:刪除過期資料並 Ping Server , 檢查並登記同步上限 , 1:只會再次檢查同步上限(會排除自己)
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.0
+ * @Version 1.2.1
  *
  * @License GPLv3
  *
