@@ -143,6 +143,7 @@
 		$queryCondition = array();
 		$queryConditionDel = array();
 		if( is_array($data) && count($data)>0 ){
+			//每個條件都要記得加上 UTC 和 DELETE 的條件
 			foreach($data as $set => $factor){
 				$queryCondition[] = $set<0 ? "OMIT" : "WHERE";
 				$tmp1 = $factor;
@@ -156,7 +157,12 @@
 					$queryConditionDel[] = $tmp2;
 				}
 			}
-			//每個條件都要記得加上 UTC 和 DELETE 的條件
+		}else{
+			//如果沒有，只放 utc 和 DELETE
+			$queryCondition[] = "WHERE";
+			$queryCondition[] = array( "SYNC_UTC" => ">".$lastUTC );
+			$queryConditionDel[] = "WHERE";
+			$queryConditionDel[] = array( "SYNC_DELETE" => "==1" );
 		}
 		
 		/*
