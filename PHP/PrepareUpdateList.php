@@ -11,7 +11,7 @@
  * 負責處理 Client 詢問 Server 有哪些資料需要更新(給Client)的 UUID List
  *
  * @Author darkk6 (LuChun Pan)
- * @Version 1.2.1
+ * @Version 1.2.5
  *
  * @License GPLv3
  *
@@ -30,8 +30,10 @@
 			</table>table(layout) 1 Name
 			</key>Key 1 Name
 			</val>Value 1
+			</set>Group_#
 			</key>Key 1 Name
 			</val>Value 1
+			</set>Group_#
 			...
 			...
 			</table>table(layout) 2 Name <fmsbr/>
@@ -41,12 +43,15 @@
 			</table>MyDataTable
 			</key>name
 			</val>==darkk6
+			</set>0
 			</key>age
 			</val><10
+			</set>0
 			</table>AllDataTable
 			</table>ThirdTable
 			</key>status
 			</val>==10
+			</set>0
 			
 		意義：
 			尋找 MyDataTable 時，只找 name ==darkk6 且 age <10 的資料 ( 找 SYNC_UTC > LAST_UTC )
@@ -55,6 +60,8 @@
 			
 			要找的 table 必須都要寫出來，沒寫的就不會做尋找
 			
+		v1.2.5 新增
+			</set> 必要參數，同欄位後方數字相同的會被放入同一個 WHERE/OMIT 條件中 , 數值為正數代表 WHERE , 負數代表 OMIT
 		
 		傳回資料格式為要寫回 FMSync 暫存表格的內容，以 \r 分隔每一筆資料，每筆資料為：
 			
@@ -95,6 +102,7 @@
 			if( !array_key_exists($tableName,$request) ) $request[$tableName] = array();
 			$currentTable = $tableName;
 			$lastKey = null;
+			$theVal = null;
 			continue;
 		}
 		
@@ -102,11 +110,18 @@
 		
 		if( preg_match("/^<\\/key>/",$line) ){
 			$lastKey = preg_replace("/<\\/key>(.+)/","$1",$line);
+			
 		}else if( preg_match("/^<\\/val>/",$line) ){
 			if( is_null($lastKey) ) continue;
 			$theVal = preg_replace("/<\\/val>(.+)/","$1",$line);
-			$request[$currentTable][$lastKey] = $theVal;
+			
+		}else if( preg_match("/^<\\/set>/",$line) ){
+			if( is_null($lastKey) || is_null($theVal) ) continue;
+			$theSet = intval(preg_replace("/<\\/set>(.*)/","$1",$line));//非數字或為空會得到 0
+			if( !array_key_exists($theSet,$request[$currentTable]) )  $request[$currentTable][$theSet] = array();
+			$request[$currentTable][$theSet][$lastKey] = $theVal;
 			$lastKey = null;
+			$theVal = null;
 		}
 	}
 	
@@ -126,18 +141,36 @@
 	$queryResult=array();
 	foreach($request as $layout => $data){
 		$queryCondition = array();
-		$queryConditionDel=array();
-		if( is_array($data)){
-			//此 Layout 有指定條件
-			$queryCondition = $data;
-			$queryConditionDel = $data;
+		$queryConditionDel = array();
+		if( is_array($data) && count($data)>0 ){
+			foreach($data as $set => $factor){
+				$queryCondition[] = $set<0 ? "OMIT" : "WHERE";
+				$tmp1 = $factor;
+				$tmp1['SYNC_UTC'] = ">".$lastUTC;
+				$queryCondition[] = $tmp1;
+				
+				if($set>=0){
+					$tmp2 = $factor;
+					$tmp2['SYNC_DELETE'] = "==1";
+					$queryConditionDel[] = "WHERE";
+					$queryConditionDel[] = $tmp2;
+				}
+			}
+			//每個條件都要記得加上 UTC 和 DELETE 的條件
 		}
-		//最後都必須要符合此條件
-		$queryCondition["SYNC_UTC"] = ">".$lastUTC;
-		$queryConditionDel["SYNC_DELETE"] = "==1";
 		
+		/*
+			$param = array_merge( array($table,$selects), $where );
+			$res = call_user_func_array(array($db,'select'),$param);
+		*/
+		$param = array_merge(
+						array($layout,"SYNC_UUID , SYNC_UTC , SYNC_DELETE"),
+						$queryCondition , 
+						$queryConditionDel 
+				);
 		//也要找出所有 SYNC_DELETE 為 1 的，並將時間設為目前 Client 的時間，藉此達到告知 Client 必須要更新這筆資料
-		$res = $db->select($layout,"SYNC_UUID , SYNC_UTC , SYNC_DELETE","WHERE",$queryCondition,"WHERE",$queryConditionDel);
+		// $res = $db->select($layout,"SYNC_UUID , SYNC_UTC , SYNC_DELETE","WHERE",$queryCondition,"WHERE",$queryConditionDel);
+		$res = call_user_func_array(array($db,'select'),$param);
 		if( $db->isError($res) ){
 			$db->log("Fetch Record","Fetching record error : ".$res);
 			continue;

@@ -8,7 +8,7 @@
 		
 	*/
 	
-	define("FMSYNC_VERSION","1.2.1");		// FMSync Server 版本，需完全相符
+	define("FMSYNC_VERSION","1.2.5");		// FMSync Server 版本，需完全相符
 	define("EzFMDB_VERSION","1.2.1");		// 需要的 EzFMDB 版本，需完全相符
 	
 	define("PHP_REQUIRE_VERSION",50600);	// 最小的 PHP 使用版本

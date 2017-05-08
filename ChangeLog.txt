@@ -1,4 +1,19 @@
 
+- v1.2.5 : [2017.05.08]
+
+	+ FMSync Client version to 1.2.5
+	+ Pull factor now can use OR & OMIT
+	
+	[Client]
+	 - FMSync_PullFactor add "sets" field
+	 - "0. FMSync_Setting" script change $$FMSYNC_CLIENT_VERSION
+	 - "1. Ask For pull list" script #20 Update
+
+	[Server]
+	 - "PrepareUpdateList.php" updated
+	 - "internal_config.php" updated
+
+
 - v1.2.1 : [2017.05.05]
 
 	+ Required EzFMDB version to 1.2.1
